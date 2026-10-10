@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>《崩坏：星穹铁道》跃迁系统策划案 · 黄彦飞</title>
+<meta name="description" content="《崩坏：星穹铁道》跃迁系统策划案 — 系统策划作品集 by 黄彦飞">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="../index.html">HYF<span>系统策划作品集</span></a>
+    <button class="nav__toggle" aria-label="菜单">&#9776;</button>
+    <ul class="nav__links">
+      <li><a href="../index.html#about"><em>01</em>关于</a></li>
+      <li><a href="../index.html#skills"><em>02</em>核心能力</a></li>
+      <li><a href="../index.html#work"><em>03</em>代表作品</a></li>
+      <li><a href="../index.html#play"><em>04</em>游戏经历</a></li>
+      <li><a href="../index.html#contact"><em>05</em>联系方式</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="page__body">
+    <a class="page__back" href="../index.html#work">&#8592; 返回作品列表</a>
+
+    <header class="doc-head">
+      <span class="doc-head__tag tag--design">系统策划案</span>
+      <h1>《崩坏：星穹铁道》跃迁系统策划案</h1>
+      <p class="doc-head__desc">完整设计一套抽卡（跃迁）系统：卡池结构与 UI 分区、概率与保底递增量表、跨池继承规则、UP 切换与追歼值落的边界处理，配套 13 张界面原型图与状态流转说明。</p>
+      <div class="doc-meta">
+        <span>撰写 / 2026.09</span>
+        <span>系统策划 · 抽卡与保底</span>
+        <span>黄彦飞</span>
+      </div>
+    </header>
+
+    <nav class="doc-nav" id="toc-box" style="display:none">
+      <div class="doc-nav__title">目录</div>
+      <ol id="toc-list"></ol>
+    </nav>
+
+    <article class="doc">
+<h2>一．系统概述</h2>
+<h3>1.1 设计说明</h3>
+<h4>1.1.1 设计目的</h4>
+<p>· 跃迁是主要收入来源，版本内容能不能持续做下去，基本就看这块。</p>
+<p>· 保底托住下限，概率制造惊喜。免费玩家靠时间也能攒出限定角色，付费玩家去追上限。</p>
+<p>· 限定 UP 按版本轮换，玩家的节奏跟着走：攒资源、抽、养成、打高难内容。</p>
+<p>· 月卡、大月卡、首充双倍这些，要能把小氪往上推成中氪。</p>
+<p>· 抽卡副产物（未熄的星芒、未熄的余烬）能换票和材料，脸黑的人不至于完全没产出。</p>
+<h4>1.1.2 设计要求</h4>
+<p>· 概率要公示明白：基础概率和含保底的综合概率都写上，抽卡日志至少存 180 天，满足合规。</p>
+<p>· 同类型卡池的保底计数和 UP 判定要跨版本继承，不能让玩家攒的抽数白费。</p>
+<p>· UP 规则得让玩家一句话说清：角色池 50/50、光锥池 75/25，歪了下次必出。</p>
+<p>· 星琼、星轨专票（限定）、星轨通票（常驻）三层分开，限定池和常驻池的票不通用，免得免费资源被常驻池吸走。</p>
+<p>· 新手池打 8 折，50 抽内必出 5 星，先把人留住。</p>
+<p>· 单抽十连都能一键跳过演出直接看结果，结果页支持分享。</p>
+<h4>1.1.3 系统流程整体逻辑</h4>
+<p>整体流程：进跃迁界面 → 选卡池 → 执行并结算 → 更新保底和 UP 状态 → 展示结果发奖励 → 去商店兑换或者查记录。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig01.png" alt="图 1"><figcaption>图 1</figcaption></figure>
+<p>图 1-1  系统流程整体逻辑</p>
+<h3>1.2 系统简述</h3>
+<h4>1.2.1 功能介绍</h4>
+<p>· 角色和光锥只能靠跃迁拿，版本限定的东西都从这里出。</p>
+<p>· 交互就两种：单抽和十连。底层状态是保底计数加 UP 判定。</p>
+<p>· 未熄的星芒、未熄的余烬这两种副产物进兑换商店，算是抽卡的回收口子。</p>
+<p>· 概率公示和历史记录都开放给玩家查，省得玩家怀疑暗改概率。</p>
+<h4>1.2.2 卡池分类总览</h4>
+<div class="table-scroll"><table><tr><th>卡池类型</th><th>卡池名称</th><th>消耗道具</th><th>5 星硬保底</th><th>UP 机制</th><th>计数继承</th></tr><tr><td>新手</td><td>星海巡航</td><td>星轨通票（8 折）</td><td>50 抽</td><td>无 UP，50 抽内必出 5 星</td><td>不继承</td></tr><tr><td>角色活动</td><td>角色活动跃迁</td><td>星轨专票</td><td>90 抽</td><td>50% UP，歪后必出</td><td>跨版本继承</td></tr><tr><td>光锥活动</td><td>光锥活动跃迁</td><td>星轨专票</td><td>80 抽</td><td>75% UP，歪后必出</td><td>跨版本继承</td></tr><tr><td>常驻</td><td>群星璀璨</td><td>星轨通票</td><td>90 抽</td><td>七位常驻角色定向抽取</td><td>永久累计</td></tr></table></div>
+<h4>1.2.3 核心循环</h4>
+<p>日常活跃产星琼 → 星琼换专票 → 跃迁消耗 → 出角色、光锥和副产物 → 未熄的星芒再换专票 → 养成 → 打高难内容 → 继续产星琼。</p>
+<h2>二．系统说明</h2>
+<h3>2.1 系统解锁与入口</h3>
+<p>· 开拓等级到 5 级、主线做完「于曈昽的骄阳下」，跃迁就开了。</p>
+<p>· 入口在游玩画面右上方，叫「抽卡界面」，点了直接进跃迁主界面。</p>
+<p>· PC 上还能按 F4 直接开，ESC 退回游玩画面。</p>
+<p>· 移动端一样，点右上那个圆形入口。</p>
+<p>· 活动期间游玩画面会挂当期 UP 的快捷入口，点了直接跳对应卡池。</p>
+<h3>2.2 卡池说明</h3>
+<h4>2.2.1 新手跃迁 · 星海巡航</h4>
+<p>· 这是个独立池，最多抽 50 次，抽满或者出了 5 星就关。</p>
+<p>· 十连打 8 折，也就是 10 连只花 8 张通票。</p>
+<p>· 前 10 连必出 4 星及以上；50 抽内必出 5 星。</p>
+<p>· 保底计数独立，不跟别的池继承。抽满 50 次入口就没了。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig02.png" alt="图 2"><figcaption>图 2</figcaption></figure>
+<p>图 2-1  星海巡航（新手跃迁）界面</p>
+<h4>2.2.2 角色活动跃迁</h4>
+<p>· 一个版本分上下半，各开 1 个（或者带复刻）限定 5 星角色。</p>
+<p>· 同期 UP 3 个 4 星角色，占 4 星的一半权重。</p>
+<p>· 花星轨专票，5 星 90 抽保底，4 星 10 抽保底。</p>
+<p>· 界面长什么样见 4.2 和图 4-1。</p>
+<h4>2.2.3 光锥活动跃迁</h4>
+<p>· 跟角色池同期开，UP 当期的限定 5 星光锥。</p>
+<p>· 也是花专票，5 星 80 抽保底，UP 命中率 75%，比角色池好出不少。</p>
+<p>· 跟角色池共用左边那排页签。切到「光锥活动跃迁」，中间海报换成光锥，右边提示文案也跟着变成「光锥抽卡 80 次必出 5 星」。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig03.png" alt="图 3"><figcaption>图 3</figcaption></figure>
+<p>图 2-2  光锥活动跃迁界面</p>
+<h4>2.2.4 常驻跃迁 · 群星璀璨</h4>
+<p>· 常驻的角色和光锥都在这儿，花通票，5 星 90 抽保底。</p>
+<p>· 右边提示区有个「选择七位角色作为定向抽取」的入口，玩家从常驻 5 星里挑 7 个当定向目标。</p>
+<p>· 累计抽满 300 次能解锁一次自选常驻 5 星，每个号只能领 1 次，领完计数清零重新攒。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig04.png" alt="图 4"><figcaption>图 4</figcaption></figure>
+<p>图 2-3  常驻跃迁「群星璀璨」界面</p>
+<h3>2.3 概率与保底说明</h3>
+<p>· 角色池：5 星基础 0.6%，4 星 5.1%，3 星 94.3%。算上保底，5 星综合 1.6%、4 星 13.0%。</p>
+<p>· 光锥池：5 星基础 0.8%，4 星 6.6%，3 星 92.6%。算上保底，5 星综合 2.0%。</p>
+<p>· 软保底：5 星在到硬保底之前会先进概率递增区间，角色池从第 74 抽起、光锥池从第 61 抽起。递增步长见 3.1、3.2 和配置表。</p>
+<p>· 硬保底：角色池 90 抽、光锥池 80 抽必出 5 星。4 星是每 10 抽必出一个 4 星及以上。</p>
+<p>· 十连里至少含 1 个 4 星及以上。</p>
+<h3>2.4 货币与消耗说明</h3>
+<p>跃迁一共涉及五种货币和道具：星琼是通用货币，星轨专票和星轨通票是跃迁券、互相不通，未熄的星芒和未熄的余烬是抽卡副产物。</p>
+<div class="table-scroll"><table><tr><th>货币 / 道具</th><th>获取途径</th><th>用途</th><th>备注</th></tr><tr><td>星琼</td><td>充值、日常 / 周常、活动、探索、成就、补偿</td><td>兑换跃迁券、兑换其他资源</td><td>通用高级货币，可与古老梦华互相兑换</td></tr><tr><td>星轨专票</td><td>星琼 1:160 兑换、星芒商店（20 星芒 / 张，不限购）、活动赠送</td><td>限定卡池（角色 / 光锥活动跃迁）</td><td>限定池专用，不可用于常驻池</td></tr><tr><td>星轨通票</td><td>星琼 1:160 兑换、星芒商店、余烬商店（90 余烬 / 张，月限 5）、大月卡、开拓等级奖励</td><td>常驻池、新手池</td><td>常驻池专用，不可用于限定池</td></tr><tr><td>未熄的星芒</td><td>4 / 5 星光锥每张转化；重复获得 4 / 5 星角色转化</td><td>星芒商店兑换专票、通票、常驻 5 星光锥与轮换 4 星角色</td><td>核心回收货币，兑换跃迁券不限购</td></tr><tr><td>未熄的余烬</td><td>3 星光锥每张转化（20 枚 / 张）</td><td>余烬商店兑换跃迁券与基础养成资源</td><td>高频低值货币，兑换跃迁券每月各限 5 张</td></tr></table></div>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig05.png" alt="图 5"><figcaption>图 5</figcaption></figure>
+<p>图 2-4  星轨专票道具详情弹窗</p>
+<p>· 点右上角「星轨专票」那个栏位，会弹道具详情：道具图、背景故事、使用说明，还有当前持有多少。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig06.png" alt="图 6"><figcaption>图 6</figcaption></figure>
+<p>图 2-5  星轨通票道具详情弹窗</p>
+<p>· 通票的弹窗结构一样，两张票分别对限定池和常驻池。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig07.png" alt="图 7"><figcaption>图 7</figcaption></figure>
+<p>图 2-6  星琼兑换弹窗</p>
+<p>· 星琼和古老梦华能互兑。弹窗里是两边的图标、兑换数目输入框，加确认和取消。确认后立刻到账。</p>
+<h3>2.5 抽卡副产物与兜底兑换</h3>
+<p>· 3 星光锥每张给未熄的余烬 ×20；4 / 5 星光锥每张分别给未熄的星芒 ×8 / ×40；重复获得 4 / 5 星角色时，第 2 ~ 7 次给星芒 ×8 / ×40 并附星魂 ×1，第 8 次及之后给星芒 ×20 / ×100（5 星另附旅伴银灵 ×1）。转化系数见 5.4。</p>
+<p>· 星芒商店 20 枚星芒换 1 张星轨专票或星轨通票，不限购，另有常驻 5 星光锥与轮换 4 星角色；余烬商店 90 枚余烬换 1 张票，专票 / 通票每月各限 5 张。兑换配置见 5.5。</p>
+<p>· 余烬商店每月 1 日 04:00 刷新，换信用点、角色经验材料、行迹材料，算是抽卡到养成的软补偿（与星芒兑换同属 4.6 的商店界面，页签结构见图 4-7）。</p>
+<p>· 这块的意义是给长期不出货的人一个兜底：运气不行就多花时间换，别让人直接弃坑。</p>
+<h3>2.6 计数继承与重置规则</h3>
+<p>· 保底计数按卡池类型分开记：角色池、光锥池、常驻池各算各的。</p>
+<p>· 同类型的池之间完全继承，上一期角色池没出的保底接着带到本期。卡池结束不清零。</p>
+<p>· 上次歪没歪这个结果也按保底分组记着，跨版本继承。</p>
+<p>· 拿到 UP 之后计数清零，UP 判定回到 50/50（角色池）或 75/25（光锥池）。</p>
+<p>· 新手池单独算，不参与继承。</p>
+<p>· 常驻池那个 300 抽的定向计数是按账号永久累计的，领完重置。</p>
+<h3>2.7 状态记录</h3>
+<p>下面这些操作都要更新并记录跃迁状态：</p>
+<p>· 消耗跃迁道具执行单抽 / 十连；</p>
+<p>· 产出任意稀有度物品；</p>
+<p>· 保底计数变化、UP 判定结果变化；</p>
+<p>· 星芒 / 余烬余额变化、商店兑换；</p>
+<p>· 卡池开启 / 结束、跨版本继承。</p>
+<h2>三．数值模型</h2>
+<h3>3.1 角色活动跃迁 5 星概率模型</h3>
+<p>设第 n 次跃迁产出 5 星的概率为 P(n)，模型如下：</p>
+<p>P(n) = 0.006                          1 ≤ n ≤ 73</p>
+<p>P(n) = min(0.006 + (n-73) × 0.06, 1)     74 ≤ n ≤ 90</p>
+<p>· 0.6% 是基础概率，前 73 抽不变；从第 74 抽开始每抽加 6 个百分点，到第 90 抽锁死 100%。</p>
+<p>· 期望出货 62.3 抽，换算成含保底的综合概率是 1.60%，跟对外公示的数字一致。</p>
+<p>· 中位数 66 抽，也就是一半的人在 66 抽内出。</p>
+<h3>3.2 光锥活动跃迁 5 星概率模型</h3>
+<p>P(n) = 0.008                          1 ≤ n ≤ 60</p>
+<p>P(n) = min(0.008 + (n-60) × 0.05, 1)     61 ≤ n ≤ 80</p>
+<p>· 0.8% 是基础概率，前 60 抽不变；从第 61 抽开始每抽加 5 个百分点，到第 80 抽锁死 100%。</p>
+<p>· 期望出货 50.4 抽，含保底综合概率 1.98%，对外公示写的是 2.0%。</p>
+<h3>3.3 4 星概率与保底模型</h3>
+<p>· 角色池 4 星基础 5.1%，光锥池 4 星基础 6.6%。</p>
+<p>· 4 星没有软保底，就是 10 抽硬保底。</p>
+<p>· 期望出货 8.0 抽，含保底综合概率 12.5% 左右，对外公示写 13.0%，以公示为准。</p>
+<p>· 4 星也有 UP 判定，角色池 50%、光锥池 75%，歪了下次必出，计数规则跟 5 星一样。</p>
+<h3>3.4 出货概率分布（角色池 5 星）</h3>
+<div class="table-scroll"><table><tr><th>抽数</th><th>10</th><th>30</th><th>50</th><th>62（期望）</th><th>70</th><th>73</th><th>75</th><th>78</th><th>80</th><th>82</th><th>85</th><th>90</th></tr><tr><td>累计出货率</td><td>5.9%</td><td>16.5%</td><td>26.0%</td><td>31.1%</td><td>34.4%</td><td>35.6%</td><td>47.4%</td><td>77.6%</td><td>91.8%</td><td>98.1%</td><td>99.9%</td><td>100%</td></tr></table></div>
+<h3>3.5 UP 判定与期望成本</h3>
+<div class="table-scroll"><table><tr><th>目标</th><th>判定规则</th><th>单次 5 星期望</th><th>目标期望抽数</th><th>折合星琼</th><th>折合人民币（无首充）</th></tr><tr><td>限定 5 星角色（0 魂）</td><td>50 / 50，歪后必出</td><td>62.3 抽</td><td>93.5 抽</td><td>14,960</td><td>约 ¥1,496</td></tr><tr><td>限定 5 星光锥（1 阶）</td><td>75 / 25，歪后必出</td><td>50.4 抽</td><td>63.0 抽</td><td>10,080</td><td>约 ¥1,008</td></tr><tr><td>角色 0 魂 + 光锥 1 阶</td><td>两者叠加</td><td>—</td><td>156.5 抽</td><td>25,040</td><td>约 ¥2,504</td></tr><tr><td>限定 5 星角色满魂（6 魂）</td><td>需 7 个拷贝</td><td>62.3 抽</td><td>654 抽</td><td>104,640</td><td>约 ¥10,464</td></tr></table></div>
+<h3>3.6 免费资源投放与长线节奏</h3>
+<div class="table-scroll"><table><tr><th>版本周期</th><th>日常 + 周常</th><th>版本活动</th><th>探索 / 成就 / 主线</th><th>维护补偿 + 兑换码</th><th>合计星琼</th><th>折合抽数</th></tr><tr><td>42 天 / 版本</td><td>约 2,520</td><td>约 3,600</td><td>约 2,000</td><td>约 1,000</td><td>约 9,120</td><td>约 57 抽</td></tr><tr><td>保守（低活跃）</td><td>约 2,520</td><td>约 2,400</td><td>约 1,200</td><td>约 1,000</td><td>约 7,120</td><td>约 44 抽</td></tr><tr><td>月卡玩家 + 免费</td><td>—</td><td>—</td><td>—</td><td>—</td><td>约 12,100</td><td>约 75 抽</td></tr></table></div>
+<p>·免费玩家：约1.6~1.9 个版本可稳定拿下一个大保底（93.5 抽），即平均每 2 个版本必得 1个限定 5 星；</p>
+<p>·月卡玩家：约 1.25 个版本一个大保底，节奏显著改善，这是月卡（¥30）性价比的核心支撑；</p>
+<p>·设计结论：免费玩家的"确定性获取周期"必须控制在 2 个版本以内，超过则会显著抬升流失率。</p>
+<h3>3.7 经济自洽性校验</h3>
+<div class="table-scroll"><table><tr><th>校验维度</th><th>风险点</th><th>处理方式</th></tr><tr><td>通胀</td><td>星琼单向投放、无回收</td><td>跃迁为主 sink；星琼兑换为次级 sink；星琼不可交易，无二级市场</td></tr><tr><td>无限自循环</td><td>星芒兑换跃迁券形成"抽卡 → 抽卡"闭环</td><td>星芒仅由 4 / 5 星光锥与重复角色产出，单抽期望 0.5 ~ 4.2 枚（≈0.03 ~ 0.21 张券），闭环放大系数 1.03 ~ 1.27；余烬兑券每月各限 5 张，闭环增益封顶 10 抽 / 月。二者均远低于自持临界点，可控</td></tr><tr><td>属性膨胀</td><td>限定角色强度持续走高导致旧角色贬值</td><td>角色强度走"机制差异化"而非纯数值堆叠；环境 buff 每版本轮换</td></tr><tr><td>负反馈缺失</td><td>长期不出货玩家无补偿</td><td>星芒 / 余烬兜底兑换 + 硬保底 + UP 判定继承三重保障</td></tr><tr><td>极端非酋</td><td>连续多次歪</td><td>歪后必出（大保底）机制将最坏情况锁定为 2 倍期望，方差可控</td></tr><tr><td>囤积风险</td><td>玩家囤积数个版本资源后一次性爆发</td><td>限定池周期固定、UP 不重复，囤积仅改变节奏不改变总消耗</td></tr></table></div>
+<h2>四．界面说明</h2>
+<h3>4.1 跃迁入口</h3>
+<p>跃迁入口挂在主界面右上角，常态是一个带图标的方形按钮；有活动的时候旁边会多挂一块 UP 立绘和倒计时。下面这张表按区域把入口上会出现的元素逐个拆开说。</p>
+<p>表 4-1  跃迁入口元素说明表</p>
+<div class="table-scroll"><table><tr><th>位置</th><th>元素名称</th><th>交互表现 / 显示规则</th></tr><tr><td>入口区 · 主界面右上角</td><td>跃迁入口按钮</td><td>点击打开跃迁主界面（见 4.2），默认停在当期主推卡池；跃迁功能未开放时整个入口不显示</td></tr><tr><td>挂件区 · 入口左侧</td><td>当期 UP 立绘</td><td>点击跳过默认首页直接跳到该活动卡池；仅在角色 / 光锥活动跃迁进行中挂载，活动结束即撤下</td></tr><tr><td>挂件区 · 立绘下方</td><td>卡池倒计时</td><td>静态展示，不响应点击；剩余不足 24 小时时文字转橙；随立绘一起出现和消失</td></tr><tr><td>角标层 · 入口右上角</td><td>红点提示</td><td>不单独响应点击；有待领的跃迁相关道具（活动送的票、邮件补偿）或当期有没进过的卡池时出现，点开入口后清除</td></tr><tr><td>过渡层 · 点击之后</td><td>加载态</td><td>期间屏蔽重复点击，连点不会开两次窗；卡池配置拉取完成前不打开界面，避免展示过期数据</td></tr></table></div>
+<p>分区小结：</p>
+<p>· 入口区：跃迁入口按钮、点击后的加载态；</p>
+<p>· 挂件区：当期 UP 立绘、卡池倒计时；</p>
+<p>· 角标层：红点提示。</p>
+<h3>4.2 跃迁主界面</h3>
+<p>跃迁主界面是整套系统的中枢，一共切成五个区：顶部信息条、左侧页签栏、中部主视觉区、右侧保底提示区和底部操作区——左边选卡池，中间看当期主视觉，右边看保底，右下角下指令。每个区的元素见 4.2.1。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig08.png" alt="图 8"><figcaption>图 8</figcaption></figure>
+<p>图 4-1  角色活动跃迁主界面（红圈编号 ① ~ ⑪ 含义见表 4-2）</p>
+<h4>4.2.1 界面元素说明</h4>
+<p>下面这张表把主界面每个区域的位置、叫什么、干什么逐个说清楚，编号跟图 4-1 上的红圈对得上；这一版把每个元素的交互表现和显示规则都并到最后一列，方便照着直接落地。</p>
+<p>表 4-2  跃迁主界面元素说明表</p>
+<div class="table-scroll"><table><tr><th>编号</th><th>位置</th><th>元素名称</th><th>内容与说明</th><th>交互表现 / 显示规则</th></tr><tr><td>①</td><td>左上角</td><td>界面标题</td><td>红底白字「跃迁」，标明当前所在系统</td><td>静态展示，不可点击</td></tr><tr><td>②</td><td>右上角</td><td>货币与跃迁券余额栏</td><td>三个并排栏位，依次显示「星琼」「星轨专票」「星轨通票」的持有量</td><td>点击任一栏位弹出道具详情弹窗（图 2-4 / 图 2-5）</td></tr><tr><td>③</td><td>右上角最右</td><td>关闭按钮</td><td>圆角方形按钮</td><td>关闭跃迁界面并返回来源界面；PC 端 ESC 同效</td></tr><tr><td>④</td><td>左侧</td><td>卡池页签列表</td><td>竖向排列四个页签：星海巡航 / 角色活动跃迁 / 光锥活动跃迁 / 群星璀璨，当前项高亮</td><td>点击切换卡池，主视觉、保底提示与消耗道具同步刷新（完整链路见 4.2.2）</td></tr><tr><td>⑤</td><td>中部主区域</td><td>卡池主视觉（海报位）</td><td>展示当期 UP 角色或光锥海报，新手池与常驻池展示对应主题图</td><td>静态展示</td></tr><tr><td>⑥</td><td>海报中部</td><td>查看按钮</td><td>海报上的「查看」按钮</td><td>点击查看当期 UP 角色 / 光锥详情</td></tr><tr><td>⑦</td><td>右侧</td><td>保底规则提示区</td><td>橙色区域，显示当前卡池的保底规则，如「角色抽卡 90 次必出 5 星」</td><td>静态展示，随卡池切换同步更新文案</td></tr><tr><td>⑧</td><td>海报左下</td><td>详情 / 试用按钮</td><td>「详情」打开概率公示弹窗；「试用」进入角色试用</td><td>详见 4.3；试用为限次体验，不消耗跃迁券</td></tr><tr><td>⑨</td><td>左下角</td><td>商店兑换入口</td><td>黄底按钮「商店兑换」</td><td>跳转商店与兑换界面（详见 4.6）</td></tr><tr><td>⑩</td><td>右下角左侧</td><td>单抽按钮</td><td>「抽卡*1 消耗星轨专票*1」</td><td>消耗 1 张对应跃迁券执行单次跃迁；票不足时按钮上的数量标红，点击改走 4.7 的补足流程</td></tr><tr><td>⑪</td><td>右下角右侧</td><td>十连按钮</td><td>「抽卡*10 消耗星轨专票*10」</td><td>消耗 10 张对应跃迁券执行十连跃迁；票数不足 10 张时同样标红，点击走同一套补足流程</td></tr></table></div>
+<p>界面布局分区小结：</p>
+<p>· 顶部一排：① 标题、② 余额栏、③ 关闭；</p>
+<p>· 左边：④ 卡池页签；</p>
+<p>· 中间：⑤ 海报、⑥ 查看、⑧ 详情和试用；</p>
+<p>· 右边：⑦ 保底提示；</p>
+<p>· 底部：⑨ 商店兑换、⑩ 单抽、⑪ 十连。</p>
+<h4>4.2.2 卡池切换</h4>
+<p>卡池页签都在左侧栏，选哪套卡池由它决定；页签一变，中部海报、右侧保底提示、底部消耗道具和概率公示要一起跟着换。下面这张表把切换这件事涉及的元素拆开说。</p>
+<p>表 4-3  卡池切换元素说明表</p>
+<div class="table-scroll"><table><tr><th>位置</th><th>元素名称</th><th>交互表现 / 显示规则</th></tr><tr><td>左侧栏</td><td>卡池页签列表</td><td>点击切换卡池；已经选中的页签再点不刷新；按固定顺序排，某一套卡池当期没开就整体隐藏该页签</td></tr><tr><td>左侧栏 · 页签单元</td><td>选中态描边</td><td>随点击落到新页签，切换动画 0.3 秒；同一时刻只有一个选中态，动画期间连点不打断重放</td></tr><tr><td>左侧栏 · 页签右上角</td><td>倒计时角标</td><td>静态展示；卡池结束前 24 小时挂上去，卡池结束后该页签下架，选中位自动回落到群星璀璨</td></tr><tr><td>联动区 · 中部 + 右侧 + 底部</td><td>主视觉与数据联动</td><td>无直接交互，跟着页签走；数据全部取切换后卡池的配置（角色池见图 4-1，光锥池见图 2-2，常驻见图 2-3，新手见图 2-1）</td></tr><tr><td>左侧栏 · 默认落点</td><td>默认停留卡池</td><td>无交互；默认停在当期主推的活动卡池，不记忆玩家上次停留的位置；当期没有活动卡池时停在群星璀璨</td></tr></table></div>
+<p>分区小结：</p>
+<p>· 左侧页签栏：卡池页签列表、选中态描边、倒计时角标；</p>
+<p>· 联动区：海报、保底提示、票种与概率公示一起换；</p>
+<p>· 默认落点：每次进来都重新定位，不继承上次停留。</p>
+<h3>4.3 概率公示与详情页面</h3>
+<p>「详情」弹窗负责把当期卡池的概率摆到明面上，外面压暗、只能关不能做别的。弹窗从上到下切成遮罩层、标题栏、概率区、UP 展示区和页签区五个区域，逐个元素的说明如下。</p>
+<p>表 4-4  概率公示与详情页面元素说明表</p>
+<div class="table-scroll"><table><tr><th>编号</th><th>位置</th><th>元素名称</th><th>内容与说明</th><th>交互表现 / 显示规则</th></tr><tr><td>①</td><td>遮罩层 · 全屏</td><td>背景遮罩</td><td>黑色半透明层，压暗底下的跃迁主界面</td><td>点击遮罩关闭弹窗；弹窗打开期间主界面不可操作</td></tr><tr><td>③</td><td>标题栏 · 右端</td><td>关闭按钮</td><td>圆角方形关闭键</td><td>点击关闭弹窗，PC 端 ESC 同效；关闭后回到来源卡池</td></tr><tr><td>④</td><td>概率区 · 上部</td><td>概率提升范围条</td><td>横条加刻度，标出基础概率段和软保底递增段的起点</td><td>静态展示；条长与刻度按卡池配置生成，不同卡池不同（见 3.1、3.2）</td></tr><tr><td>⑦</td><td>UP 展示区 · 分区列表</td><td>当期 UP 对象图标</td><td>分区列出当期概率提升的 5 星与 4 星对象</td><td>点击图标弹出该角色或光锥的立绘与简介；角色池显示角色，光锥池显示光锥，常驻池没有 UP 时改为列出全部可出对象</td></tr><tr><td>⑧</td><td>页签区 · 顶部</td><td>查看详情 / 历史记录</td><td>两个页签，前者讲概率规则，后者是跃迁记录</td><td>点击切换；默认停在「查看详情」，「历史记录」的内容见 4.5</td></tr></table></div>
+<p>分区小结：</p>
+<p>· 遮罩层：① 背景遮罩；</p>
+<p>· 标题栏：② 弹窗标题、③ 关闭按钮；</p>
+<p>· 概率区：④ 概率提升范围条、⑤ 概率明细表、⑥ 合规脚注；</p>
+<p>· UP 展示区：⑦ 当期 UP 对象图标；</p>
+<p>· 页签区：⑧ 查看详情与历史记录。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig09.png" alt="图 9"><figcaption>图 9</figcaption></figure>
+<p>图 4-2  抽卡概率详情弹窗（红圈编号 ① ③ ④ ⑦ 含义见表 4-4）</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig10.png" alt="图 10"><figcaption>图 10</figcaption></figure>
+<p>图 4-3  详情页面 · 查看详情（红圈编号 ⑧ 含义见表 4-4）</p>
+<h3>4.4 跃迁演出与结果展示</h3>
+<p>跃迁结果分成三段走：演出、结果面板、操作区。演出可以一键跳过直接看结算，结果面板负责把这次出什么、重复转化了多少代币摆清楚，操作区给「再来一次」和「分享」两个出口。逐个元素的说明如下。</p>
+<p>表 4-5  跃迁演出与结果展示元素说明表</p>
+<div class="table-scroll"><table><tr><th>编号</th><th>位置</th><th>元素名称</th><th>内容与说明</th><th>交互表现 / 显示规则</th></tr><tr><td>②</td><td>结果面板 · 中央</td><td>结果卡 / 结果网格</td><td>单抽 1 张卡，十连排成一排 10 张</td><td>点击单卡翻面看详情，点面板空白推进到下一段；十连按稀有度从高到低排列（5 星 → 4 星 → 3 星），5 星卡加大加粗</td></tr><tr><td>④</td><td>结果面板 · 卡片下方</td><td>重复转化标注</td><td>出货对象对应的代币转化说明</td><td>当场结算；重复角色在给代币的同时按规则给星魂，光锥不论是否重复都会转出代币，转化系数见 5.4</td></tr><tr><td>⑦</td><td>操作区 · 右下角</td><td>分享按钮</td><td>「点击分享结果」字样按钮</td><td>点击唤起系统分享面板；分享图由客户端本地生成，不带任何账号标识信息</td></tr></table></div>
+<p>分区小结：</p>
+<p>· 演出层：① 跃迁动画；</p>
+<p>· 结果面板：② 结果卡与结果网格、③ 稀有度描边、④ 重复转化标注、⑤ 本次结算汇总；</p>
+<p>· 操作区：⑥ 再次跃迁、⑦ 分享结果、⑧ 返回。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig11.png" alt="图 11"><figcaption>图 11</figcaption></figure>
+<p>图 4-4  单抽结果展示（红圈编号 ② ⑦ 含义见表 4-5）</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig12.png" alt="图 12"><figcaption>图 12</figcaption></figure>
+<p>图 4-5  十连结果展示（红圈编号 ② ④ ⑦ 含义见表 4-5）</p>
+<h3>4.5 跃迁记录</h3>
+<p>跃迁记录是纯只读页面，从详情弹窗的「历史记录」页签进来，从上到下切成说明与筛选区、列表区和归档边界三部分。逐个元素的说明如下。</p>
+<p>表 4-6  跃迁记录元素说明表</p>
+<div class="table-scroll"><table><tr><th>编号</th><th>位置</th><th>元素名称</th><th>内容与说明</th><th>交互表现 / 显示规则</th></tr><tr><td>①</td><td>说明区 · 顶部</td><td>查询范围说明</td><td>小字写明当前能查到多久以前的数据</td><td>静态展示；文案随服务端留存时长走，过期数据归类到「已归档」</td></tr><tr><td>⑤</td><td>列表区 · 表头</td><td>记录表头</td><td>四列：对象类型、对象名称、跃迁类型、跃迁时间</td><td>静态展示；列顺序固定，不支持自定义排序</td></tr><tr><td>⑥</td><td>列表区 · 主体</td><td>记录行</td><td>一条出货一行记录</td><td>只读，点击无响应；按时间倒序，最新的在最上；一次十连的 10 条连续排列并共享同一时间戳</td></tr></table></div>
+<p>分区小结：</p>
+<p>· 说明区：① 查询范围说明；</p>
+<p>· 筛选区：② 跃迁类型、③ 时间范围、④ 统计条；</p>
+<p>· 列表区：⑤ 表头、⑥ 记录行、⑦ 分页加载、⑧ 空结果占位；</p>
+<p>· 归档边界：客户端只查得到近 6 个月，服务端仍留存 180 天用于合规核查。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig13.png" alt="图 13"><figcaption>图 13</figcaption></figure>
+<p>图 4-6  详情页面 · 历史记录（红圈编号 ① ⑤ ⑥ 含义见表 4-6）</p>
+<h3>4.6 商店与兑换界面</h3>
+<p>商店与兑换界面从主界面左下的「商店兑换」进来，也可以在背包里点货币的「使用」跳过来。整屏切成左侧分类栏、右上角余额、中部商品网格和兑换确认四部分，逐个元素的说明如下。</p>
+<p>表 4-7  商店与兑换界面元素说明表</p>
+<div class="table-scroll"><table><tr><th>编号</th><th>位置</th><th>元素名称</th><th>内容与说明</th><th>交互表现 / 显示规则</th></tr><tr><td>①</td><td>左侧栏</td><td>分类页签列</td><td>竖排六个分类：推荐、星芒兑换、余烬兑换、协议商店、捕获梦华、星琼购买</td><td>点击切换分类；顺序固定，默认停在「推荐」；图 4-7 停在「星芒兑换」</td></tr><tr><td>②</td><td>右上角</td><td>货币余额栏</td><td>当前分类对应代币的持有数量</td><td>点击弹出该代币的道具详情；货币图标与数值随分类切换一起换</td></tr><tr><td>③</td><td>中部主区</td><td>商品网格</td><td>一格一个商品，按配置顺序排列</td><td>上下滚动浏览；每行列数固定，不同分类之间独立滚动位置</td></tr><tr><td>④</td><td>商品格 · 主体</td><td>商品卡</td><td>图标、名称、单价，单价前带对应货币的小图标</td><td>点击弹出购买确认；价格取自 5.5 的兑换配置表，不由界面写死</td></tr></table></div>
+<p>分区小结：</p>
+<p>· 左侧分类栏：① 分类页签列；</p>
+<p>· 顶部信息条：② 货币余额栏；</p>
+<p>· 中部商品网格：③ 商品网格、④ 商品卡、⑤ 限购进度、⑥ 售罄态；</p>
+<p>· 确认层：⑦ 兑换确认窗；</p>
+<p>· 刷新规则：⑧ 每月 1 日 4:00 统一重置限购。</p>
+<figure class="figure"><img src="assets/img/hsr-warp-design/fig14.png" alt="图 14"><figcaption>图 14</figcaption></figure>
+<p>图 4-7  星芒兑换商店（红圈编号 ① ~ ④ 含义见表 4-7）</p>
+<h3>4.7 资源不足与充值引导</h3>
+<p>跃迁券不够的时候点「跃迁」，主界面不动，上面压一个补足弹窗：先把差多少摆明白，再给一条「用星琼补」和一条「去充值」的路，星琼也不够时就只剩充值。弹窗切成遮罩层、文案区、按钮区和规则脚注四部分，逐个元素的说明如下。</p>
+<p>表 4-8  资源不足与充值引导弹窗元素说明表</p>
+<div class="table-scroll"><table><tr><th>位置</th><th>元素名称</th><th>交互表现 / 显示规则</th></tr><tr><td>遮罩层 · 全屏</td><td>背景遮罩</td><td>点击遮罩等于取消本次跃迁，不扣任何道具，也不改变已有票数</td></tr><tr><td>文案区 · 中部</td><td>缺口文案「跃迁券不足，还差 XX 枚，可用 XXX 星琼补足」</td><td>静态展示；XX 为缺几张票，XXX 按 160 星琼兑一张算出，随持有票数实时刷新</td></tr><tr><td>按钮区 · 主按钮</td><td>主按钮「使用星琼补足 XXX」</td><td>点击先扣星琼、按 160 比 1 自动换成票，再执行本次跃迁；星琼不足以覆盖缺口时该按钮不亮</td></tr><tr><td>按钮区 · 次按钮</td><td>前往充值</td><td>点击跳转星琼购买（见图 2-6）；跳转不中断当前卡池，返回后仍停在原卡池原黄页位置</td></tr><tr><td>按钮区 · 右端</td><td>关闭按钮</td><td>点击等于取消本次跃迁；与点遮罩、PC 端 ESC 效果一致</td></tr><tr><td>按钮区 · 单按钮态</td><td>充值单按钮态「前往充值」</td><td>此时文案改为「星琼不足」；该态下不能通过星琼完成补足，只能充值或关闭</td></tr><tr><td>文案区 · 推荐位</td><td>推荐充值档位提示</td><td>静态展示；例如差 320 星琼就推荐 980 那一档，不推荐更高档，避免过度推销</td></tr><tr><td>规则脚注 · 底部</td><td>补足顺序说明</td><td>静态展示；先把手里已有的票用掉，缺的几张才按 160 星琼一张补，差几张换几张，不多换</td></tr></table></div>
+<p>分区小结：</p>
+<p>· 遮罩层：背景遮罩；</p>
+<p>· 文案区：缺口文案、推荐充值档位；</p>
+<p>· 按钮区：使用星琼补足、前往充值、关闭、单按钮态；</p>
+<p>· 规则脚注：补足顺序说明。</p>
+<h2>五．配置表</h2>
+<h3>5.1 卡池基础配置表</h3>
+<h3>表 5-1  跃迁卡池基础配置表</h3>
+<div class="table-scroll"><table><tr><th>var</th><th>GachaID</th><th>GachaName</th><th>GachaType</th><th>CostItemID</th><th>CostNum</th><th>PityGroupID</th><th>StartTime</th><th>EndTime</th></tr><tr><td>程序调用</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td></tr><tr><td>type</td><td>string</td><td>string</td><td>int</td><td>string</td><td>int</td><td>string</td><td>string</td><td>string</td></tr><tr><td>备注</td><td>卡池ID</td><td>卡池名称</td><td>卡池类型 1新手/2角色活动/3光锥活动/4常驻</td><td>消耗道具ID</td><td>单次消耗数量</td><td>保底计数分组ID</td><td>开启时间</td><td>结束时间</td></tr><tr><td></td><td>GP001</td><td>星海巡航</td><td>1</td><td>Ticket_002</td><td>1</td><td>PITY_NOVICE</td><td>常驻</td><td>抽满 50 次关闭</td></tr><tr><td></td><td>GP002</td><td>角色活动跃迁</td><td>2</td><td>Ticket_001</td><td>1</td><td>PITY_CHAR</td><td>版本上半 06:00</td><td>版本下半结束前 15:00</td></tr><tr><td></td><td>GP003</td><td>光锥活动跃迁</td><td>3</td><td>Ticket_001</td><td>1</td><td>PITY_LC</td><td>版本上半 06:00</td><td>版本下半结束前 15:00</td></tr><tr><td></td><td>GP004</td><td>群星璀璨</td><td>4</td><td>Ticket_002</td><td>1</td><td>PITY_STD</td><td>永久</td><td>永久</td></tr></table></div>
+<h3>5.2 概率与保底配置表</h3>
+<h3>表 5-2  跃迁概率与保底配置表</h3>
+<div class="table-scroll"><table><tr><th>var</th><th>PityGroupID</th><th>Rarity</th><th>BaseRate</th><th>SoftPityStart</th><th>SoftPityStep</th><th>HardPity</th><th>UpRate</th><th>PityCarry</th><th>GuaranteeNext</th></tr><tr><td>程序调用</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td></tr><tr><td>type</td><td>string</td><td>int</td><td>float</td><td>int</td><td>float</td><td>int</td><td>float</td><td>int</td><td>int</td></tr><tr><td>备注</td><td>保底分组</td><td>稀有度</td><td>基础概率</td><td>软保底起始抽数 0为无</td><td>软保底每抽绝对递增</td><td>硬保底抽数</td><td>UP命中率</td><td>是否跨池继承</td><td>歪后是否必出UP</td></tr><tr><td></td><td>PITY_CHAR</td><td>5</td><td>0.006</td><td>74</td><td>0.06</td><td>90</td><td>0.50</td><td>1</td><td>1</td></tr><tr><td></td><td>PITY_CHAR</td><td>4</td><td>0.051</td><td>0</td><td>0</td><td>10</td><td>0.50</td><td>1</td><td>1</td></tr><tr><td></td><td>PITY_CHAR</td><td>3</td><td>0.943</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td></td><td>PITY_LC</td><td>5</td><td>0.008</td><td>61</td><td>0.05</td><td>80</td><td>0.75</td><td>1</td><td>1</td></tr><tr><td></td><td>PITY_LC</td><td>4</td><td>0.066</td><td>0</td><td>0</td><td>10</td><td>0.75</td><td>1</td><td>1</td></tr><tr><td></td><td>PITY_LC</td><td>3</td><td>0.926</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr><tr><td></td><td>PITY_STD</td><td>5</td><td>0.006</td><td>74</td><td>0.06</td><td>90</td><td>0</td><td>1</td><td>0</td></tr><tr><td></td><td>PITY_STD</td><td>4</td><td>0.051</td><td>0</td><td>0</td><td>10</td><td>0</td><td>1</td><td>0</td></tr><tr><td></td><td>PITY_NOVICE</td><td>5</td><td>0.006</td><td>0</td><td>0</td><td>50</td><td>0</td><td>0</td><td>0</td></tr></table></div>
+<h3>5.3 奖励池权重配置表</h3>
+<h3>表 5-3  跃迁奖励池权重配置表</h3>
+<div class="table-scroll"><table><tr><th>var</th><th>PoolID</th><th>ItemType</th><th>ItemID</th><th>ItemName</th><th>Rarity</th><th>Weight</th><th>IsUp</th></tr><tr><td>程序调用</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td></tr><tr><td>type</td><td>string</td><td>int</td><td>string</td><td>string</td><td>int</td><td>int</td><td>int</td></tr><tr><td>备注</td><td>奖池ID</td><td>道具类型 1角色/2光锥</td><td>道具ID</td><td>道具名称</td><td>稀有度</td><td>权重</td><td>是否UP</td></tr><tr><td></td><td>POOL_CHAR_5</td><td>1</td><td>Char_101</td><td>当期UP角色</td><td>5</td><td>700</td><td>1</td></tr><tr><td></td><td>POOL_CHAR_5</td><td>1</td><td>Char_001~007</td><td>常驻5星角色A~G</td><td>5</td><td>各100</td><td>0</td></tr><tr><td></td><td>POOL_CHAR_4</td><td>1</td><td>Char_201~203</td><td>当期UP 4星角色A~C</td><td>4</td><td>各500</td><td>1</td></tr><tr><td></td><td>POOL_CHAR_4</td><td>1/2</td><td>Char_020~099</td><td>非UP 4星角色 / 光锥</td><td>4</td><td>合计1500</td><td>0</td></tr><tr><td></td><td>POOL_CHAR_3</td><td>2</td><td>LC_300~319</td><td>3星光锥</td><td>3</td><td>各100</td><td>0</td></tr><tr><td></td><td>POOL_LC_5</td><td>2</td><td>LC_101</td><td>当期UP光锥</td><td>5</td><td>2100</td><td>1</td></tr><tr><td></td><td>POOL_LC_5</td><td>2</td><td>LC_001~007</td><td>常驻5星光锥A~G</td><td>5</td><td>各100</td><td>0</td></tr><tr><td></td><td>POOL_STD_5</td><td>1</td><td>Char_001~007</td><td>常驻5星角色A~G</td><td>5</td><td>各100</td><td>0</td></tr></table></div>
+<h3>5.4 副产物转化配置表</h3>
+<h3>表 5-4  跃迁副产物转化配置表</h3>
+<div class="table-scroll"><table><tr><th>var</th><th>SourceType</th><th>SourceRarity</th><th>IsDuplicate</th><th>ConvItemID</th><th>ConvItemName</th><th>ConvNum</th></tr><tr><td>程序调用</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td></tr><tr><td>type</td><td>int</td><td>int</td><td>int</td><td>string</td><td>string</td><td>int</td></tr><tr><td>备注</td><td>来源类型 1角色/2光锥</td><td>来源稀有度</td><td>是否重复</td><td>转化道具ID</td><td>转化道具名称</td><td>转化数量</td></tr><tr><td></td><td>1</td><td>5</td><td>1</td><td>Item_901</td><td>未熄的星芒</td><td>40</td></tr><tr><td></td><td>1</td><td>4</td><td>1</td><td>Item_901</td><td>未熄的星芒</td><td>8</td></tr><tr><td></td><td>2</td><td>5</td><td>0</td><td>Item_901</td><td>未熄的星芒</td><td>40</td></tr><tr><td></td><td>2</td><td>4</td><td>0</td><td>Item_901</td><td>未熄的星芒</td><td>8</td></tr><tr><td></td><td>2</td><td>3</td><td>0</td><td>Item_902</td><td>未熄的余烬</td><td>20</td></tr><tr><td>第 8 次起</td><td>1</td><td>5</td><td>1</td><td>Item_901</td><td>未熄的星芒</td><td>100</td></tr><tr><td>第 8 次起</td><td>1</td><td>4</td><td>1</td><td>Item_901</td><td>未熄的星芒</td><td>20</td></tr></table></div>
+<h3>5.5 星芒 / 余烬兑换配置表</h3>
+<h3>表 5-5  星芒 / 余烬商店兑换配置表</h3>
+<div class="table-scroll"><table><tr><th>var</th><th>ShopID</th><th>ItemID</th><th>ItemName</th><th>CostItemID</th><th>CostNum</th><th>BuyNum</th><th>LimitNum</th><th>RefreshCycle</th></tr><tr><td>程序调用</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td></tr><tr><td>type</td><td>string</td><td>string</td><td>string</td><td>string</td><td>int</td><td>int</td><td>int</td><td>string</td></tr><tr><td>备注</td><td>商店ID 1星芒/2余烬，限购 0 表示不限购</td><td>商品ID</td><td>商品名称</td><td>消耗货币ID</td><td>单价</td><td>单次发放数量</td><td>限购次数</td><td>刷新周期</td></tr><tr><td></td><td>1</td><td>Ticket_001</td><td>星轨专票</td><td>Item_901</td><td>20</td><td>1</td><td>0</td><td>每月1日04:00</td></tr><tr><td></td><td>1</td><td>Ticket_002</td><td>星轨通票</td><td>Item_901</td><td>20</td><td>1</td><td>0</td><td>每月1日04:00</td></tr><tr><td></td><td>1</td><td>Item_801</td><td>自塑尘脂</td><td>Item_901</td><td>60</td><td>1</td><td>1</td><td>每月1日04:00</td></tr><tr><td></td><td>1</td><td>Item_802</td><td>遗器残骸</td><td>Item_901</td><td>30</td><td>100</td><td>10</td><td>每月1日04:00</td></tr><tr><td></td><td>2</td><td>Ticket_001</td><td>星轨专票</td><td>Item_902</td><td>90</td><td>1</td><td>5</td><td>每月1日04:00</td></tr><tr><td></td><td>2</td><td>Ticket_002</td><td>星轨通票</td><td>Item_902</td><td>90</td><td>1</td><td>5</td><td>每月1日04:00</td></tr><tr><td></td><td>2</td><td>Item_701</td><td>信用点</td><td>Item_902</td><td>10</td><td>10000</td><td>20</td><td>每月1日04:00</td></tr><tr><td></td><td>2</td><td>Item_702</td><td>角色经验材料</td><td>Item_902</td><td>20</td><td>20</td><td>10</td><td>每月1日04:00</td></tr></table></div>
+<h3>5.6 货币与价格配置表</h3>
+<h3>表 5-6  跃迁货币与充值价格配置表</h3>
+<div class="table-scroll"><table><tr><th>var</th><th>ProductID</th><th>ProductName</th><th>ItemID</th><th>ItemNum</th><th>PayUnit</th><th>PayPrice</th><th>FirstBonus</th><th>Remark</th></tr><tr><td>程序调用</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td></tr><tr><td>type</td><td>string</td><td>string</td><td>string</td><td>int</td><td>string</td><td>float</td><td>int</td><td>string</td></tr><tr><td>备注</td><td>商品ID</td><td>商品名称</td><td>发放道具ID</td><td>发放数量</td><td>支付单位</td><td>支付价格</td><td>首充是否双倍</td><td>备注</td></tr><tr><td></td><td>P001</td><td>星琼·60</td><td>Jade</td><td>60</td><td>￥</td><td>6</td><td>1</td><td>基础档</td></tr><tr><td></td><td>P002</td><td>星琼·300</td><td>Jade</td><td>300</td><td>￥</td><td>30</td><td>1</td><td>基础档</td></tr><tr><td></td><td>P003</td><td>星琼·980</td><td>Jade</td><td>980</td><td>￥</td><td>98</td><td>1</td><td>基础档</td></tr><tr><td></td><td>P004</td><td>星琼·1980</td><td>Jade</td><td>1980</td><td>￥</td><td>198</td><td>1</td><td>基础档</td></tr><tr><td></td><td>P005</td><td>星琼·3280</td><td>Jade</td><td>3280</td><td>￥</td><td>328</td><td>1</td><td>基础档</td></tr><tr><td></td><td>P006</td><td>星琼·6480</td><td>Jade</td><td>6480</td><td>￥</td><td>648</td><td>1</td><td>基础档</td></tr><tr><td></td><td>P007</td><td>列车补给证（月卡）</td><td>Jade</td><td>3000</td><td>￥</td><td>30</td><td>0</td><td>即时300 + 每日90×30天</td></tr><tr><td></td><td>P008</td><td>星轨合约（大月卡）</td><td>Ticket_002</td><td>10</td><td>￥</td><td>68</td><td>0</td><td>另含星琼与养成材料</td></tr><tr><td></td><td>P009</td><td>星琼兑换跃迁券</td><td>Ticket_001/002</td><td>1</td><td>星琼</td><td>160</td><td>0</td><td>1 张券 = 160 星琼</td></tr><tr><td></td><td>P010</td><td>古老梦华兑换星琼</td><td>Jade</td><td>1</td><td>古老梦华</td><td>1</td><td>0</td><td>1:1 兑换，见图 2-6</td></tr></table></div>
+<h3>5.7 常驻池自选权益配置表</h3>
+<h3>表 5-7  常驻跃迁自选权益配置表</h3>
+<div class="table-scroll"><table><tr><th>var</th><th>SelectID</th><th>TriggerNum</th><th>SelectablePool</th><th>SelectLimit</th><th>ResetAfterClaim</th></tr><tr><td>程序调用</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td><td>c,s</td></tr><tr><td>type</td><td>string</td><td>int</td><td>string</td><td>int</td><td>int</td></tr><tr><td>备注</td><td>权益ID</td><td>触发累计抽数</td><td>可选池</td><td>可选数量</td><td>领取后是否重置计数</td></tr><tr><td></td><td>SEL001</td><td>300</td><td>POOL_STD_5_CHAR</td><td>1</td><td>1</td></tr></table></div>
+<h2>六．美术与音效需求</h2>
+<div class="table-scroll"><table><tr><th>编号</th><th>名称</th><th>格式</th><th>用途</th></tr><tr><td>HSR_Warp_Icon</td><td>跃迁功能图标</td><td>PNG</td><td>游玩画面「抽卡界面」入口按钮图标</td></tr><tr><td>HSR_Warp_MainBG</td><td>跃迁主界面背景</td><td>PNG</td><td>跃迁主界面的背景图，需留出版面给海报与按钮</td></tr><tr><td>HSR_Warp_Banner_Char</td><td>角色活动跃迁海报</td><td>JPG</td><td>当期 UP 角色海报与卡池标题字</td></tr><tr><td>HSR_Warp_Banner_LC</td><td>光锥活动跃迁海报</td><td>JPG</td><td>当期 UP 光锥海报与卡池标题字</td></tr><tr><td>HSR_Warp_Banner_Novice</td><td>新手跃迁海报</td><td>JPG</td><td>新手卡池海报</td></tr><tr><td>HSR_Warp_Banner_Std</td><td>常驻跃迁海报</td><td>JPG</td><td>常驻池海报与定向抽取说明图</td></tr><tr><td>HSR_Warp_FX_5Star</td><td>五星结果特效</td><td>特效 / 序列帧</td><td>结果展示页五星物品的金色流光与全屏揭示演出</td></tr><tr><td>HSR_Warp_FX_4Star</td><td>四星结果特效</td><td>特效 / 序列帧</td><td>结果展示页四星物品的紫色揭示特效</td></tr><tr><td>HSR_Warp_FX_3Star</td><td>三星结果特效</td><td>特效 / 序列帧</td><td>结果展示页三星物品的蓝色揭示特效</td></tr><tr><td>HSR_Warp_Frame_5</td><td>五星品质框</td><td>PNG</td><td>物品图标的五星品质边框（金色渐变 + 流光）</td></tr><tr><td>HSR_Warp_Frame_4</td><td>四星品质框</td><td>PNG</td><td>物品图标的四星品质边框</td></tr><tr><td>HSR_Warp_UPBadge</td><td>UP 角标</td><td>PNG</td><td>概率详情弹窗与物品详情中的 UP 标识</td></tr><tr><td>HSR_Warp_PityTip</td><td>保底提示底图</td><td>PNG</td><td>右侧保底规则提示区的底图</td></tr><tr><td>HSR_Ticket_Special</td><td>星轨专票图标</td><td>PNG</td><td>限定跃迁券道具图标</td></tr><tr><td>HSR_Ticket_Standard</td><td>星轨通票图标</td><td>PNG</td><td>常驻跃迁券道具图标</td></tr><tr><td>HSR_Starlight_Icon</td><td>未熄的星芒图标</td><td>PNG</td><td>星芒货币图标</td></tr><tr><td>HSR_Ember_Icon</td><td>未熄的余烬图标</td><td>PNG</td><td>余烬货币图标</td></tr><tr><td>HSR_Warp_ShareIcon</td><td>结果分享按钮</td><td>PNG</td><td>结果展示页「点击分享结果」按钮素材</td></tr><tr><td>HSR_SE_Warp_Single</td><td>单抽音效</td><td>WAV</td><td>单次跃迁的揭示音效</td></tr><tr><td>HSR_SE_Warp_Ten</td><td>十连音效</td><td>WAV</td><td>十连跃迁的连续揭示音效</td></tr><tr><td>HSR_SE_Reveal_5Star</td><td>五星揭示音效</td><td>WAV</td><td>五星物品揭示的专属音效与语音</td></tr><tr><td>HSR_SE_Reveal_4Star</td><td>四星揭示音效</td><td>WAV</td><td>四星物品揭示音效</td></tr></table></div>
+<h2>七．异常与边界处理</h2>
+<div class="table-scroll"><table><tr><th>场景</th><th>处理规则</th></tr><tr><td>跃迁请求超时 / 断线</td><td>服务端以「扣费 + 发奖」为原子事务；客户端重连后以服务端记录为准补发展示，不重复扣费</td></tr><tr><td>卡池切换瞬间提交抽取</td><td>以服务端接收到的请求时间戳判定归属卡池；跨池临界 100ms 内的请求一律归入即将结束的卡池</td></tr><tr><td>版本更新时抽取</td><td>更新维护前 30 分钟关闭跃迁入口，禁止在结算窗口内提交请求</td></tr><tr><td>道具不足</td><td>拦截请求，弹出补足弹窗；不允许出现负数道具</td></tr><tr><td>奖池配置变更</td><td>奖池配置热更必须在卡池切换点生效，禁止在卡池运行期变更权重</td></tr><tr><td>重复领取 / 并发请求</td><td>单账号跃迁请求加分布式锁，同一时刻仅处理 1 次抽取，返回结果后解锁</td></tr><tr><td>保底计数异常</td><td>以服务端计数为准；提供运营后台按账号查询与手动修正能力（需双人复核）</td></tr><tr><td>未成年人 / 防沉迷</td><td>遵守最新防沉迷规定，限制单次与单日充值上限，超时强制下线</td></tr><tr><td>抽卡日志</td><td>全量抽卡日志落库并留存不少于 180 天，支持按账号导出供监管与客服核查</td></tr><tr><td>退款 / 回退</td><td>已消耗跃迁券对应的抽取结果不支持回退；仅整单退款时，由运营后台按道具流水回退</td></tr></table></div>
+    </article>
+
+    <div class="doc-foot">
+      <a class="page__back" href="../index.html#work">&#8592; 返回作品列表</a>
+      <a class="page__back" href="../index.html#contact">联系我 &#8594;</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">黄彦飞 · 游戏系统策划作品集 &nbsp;|&nbsp; 上海</footer>
+<script src="../assets/main.js"></script>
+</body>
+</html>

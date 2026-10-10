@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>《洛克王国：世界》通行证系统策划案 · 黄彦飞</title>
+<meta name="description" content="《洛克王国：世界》通行证系统策划案 — 系统策划作品集 by 黄彦飞">
+<link rel="stylesheet" href="../assets/styles.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav__inner">
+    <a class="nav__logo" href="../index.html">HYF<span>系统策划作品集</span></a>
+    <button class="nav__toggle" aria-label="菜单">&#9776;</button>
+    <ul class="nav__links">
+      <li><a href="../index.html#about"><em>01</em>关于</a></li>
+      <li><a href="../index.html#skills"><em>02</em>核心能力</a></li>
+      <li><a href="../index.html#work"><em>03</em>代表作品</a></li>
+      <li><a href="../index.html#play"><em>04</em>游戏经历</a></li>
+      <li><a href="../index.html#contact"><em>05</em>联系方式</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="page">
+  <div class="page__body">
+    <a class="page__back" href="../index.html#work">&#8592; 返回作品列表</a>
+
+    <header class="doc-head">
+      <span class="doc-head__tag tag--design">系统策划案</span>
+      <h1>《洛克王国：世界》通行证系统策划案</h1>
+      <p class="doc-head__desc">围绕《洛克王国：世界》「拾光通行证」做复刻式系统设计：双入口跳转逻辑与首次/非首次进入的分支状态、等级构成与经验投放、任务链与赛季活动的对应关系、免费线与小/大礼券双付费线的奖励点布局，配套界面布局图与配表说明。</p>
+      <div class="doc-meta">
+        <span>撰写 / 2026.05</span>
+        <span>系统策划 · 赛季通行证</span>
+        <span>黄彦飞</span>
+      </div>
+    </header>
+
+    <nav class="doc-nav" id="toc-box" style="display:none">
+      <div class="doc-nav__title">目录</div>
+      <ol id="toc-list"></ol>
+    </nav>
+
+    <article class="doc">
+<h3>文档信息</h3>
+<div class="table-scroll"><table><tr><th>版本号</th><th>撰写日期</th><th>撰写人</th><th>撰写内容</th></tr><tr><td>V0.0</td><td>2026/4/19</td><td>黄彦飞</td><td>创建文档</td></tr><tr><td>V0.1</td><td>2026/4/19</td><td>黄彦飞</td><td>背景说明</td></tr><tr><td>V0.2</td><td>2026/4/24</td><td>黄彦飞</td><td>正文分析框架</td></tr><tr><td>V0.3</td><td>2026/4/30</td><td>黄彦飞</td><td>补充内容</td></tr><tr><td>V0.4</td><td>2026/5/11</td><td>黄彦飞</td><td>完善细节</td></tr></table></div>
+<h2>前言</h2>
+<h3>设计目的</h3>
+<p>促进玩家付费转化。</p>
+<p>稳定长线留存。</p>
+<h3>文档参考</h3>
+<p>本案参考《洛克王国：世界》的通行证系统【拾光通行证】，进行系统策划案的复刻还原练习。</p>
+<h3>系统简述</h3>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig01.png" alt="图 1"><figcaption>图 1</figcaption></figure>
+<h3>功能介绍</h3>
+<p>承载赛季长线养成资源、限定宠物、外观、道具的稳定获取途径</p>
+<p>区分付费分层，设置免费，小礼券和大礼券付费，两种奖励点促进付费转化</p>
+<p>用控制经验投放的方式提高玩家日常活跃，促使玩家长线留存</p>
+<p>设置不同活跃度任务，引导玩家参与各类玩法</p>
+<p>服用赛季内容资源和提升版本内容可玩性</p>
+<h3>整体跳转逻辑</h3>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig02.jpg" alt="图 2"><figcaption>图 2</figcaption></figure>
+<h2>功能详解</h2>
+<h3>通行证</h3>
+<h3>1.2.系统入口</h3>
+<p>玩家等级达到<strong>15</strong>级，完成前期主线任务【魔法师手册：学院作业】前置章节，解锁到第三章节主线任务，自动解锁赛季活动，赛季通行证入口位于赛季活动界面内。</p>
+<p>通行证界面展开会充满整个主界面。</p>
+<p>赛季活动入口</p>
+<p>赛季活动第一个入口位于主界面顶部导航栏赛季icon处，如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig03.jpg" alt="图 3"><figcaption>图 3</figcaption></figure>
+<p>赛季活动第二个入口在左上角星盘icon内。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig04.jpg" alt="图 4"><figcaption>图 4</figcaption></figure>
+<p>通行证入口</p>
+<p>固定位于主界面顶部导航栏赛季icon处，如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig05.jpg" alt="图 5"><figcaption>图 5</figcaption></figure>
+<h4>1.2.1.打开通行证</h4>
+<p>打开通行证界面分为该赛季首次打开和该赛季非首次打开。</p>
+<p>该赛季首次打开通行证</p>
+<p>首次在赛季活动界面点击通行证icon打开，自动跳转主题选择界面。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig06.png" alt="图 6"><figcaption>图 6</figcaption></figure>
+<p>PC端/移动端点击要选择的主题icon，弹出主题确定界面。</p>
+<p>主题确定界面两个宠物主题为<strong>动态Live2d</strong>。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig07.png" alt="图 7"><figcaption>图 7</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig08.png" alt="图 8"><figcaption>图 8</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig09.png" alt="图 9"><figcaption>图 9</figcaption></figure>
+<p>主题确定界面：和按钮可以进行主题切换，点击【再想想】返回主题选择界面，点击【就它了】切入通行证-日常任务界面。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig10.png" alt="图 10"><figcaption>图 10</figcaption></figure>
+<p>该赛季非首次打开通行证</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig11.png" alt="图 11"><figcaption>图 11</figcaption></figure>
+<p>PC端默认快捷键F1/Alt键呼出鼠标点击主界面顶部赛季icon/Alt键呼出鼠标点击主界面左上角星盘icon → 点击赛季icon，在赛季活动界面点击通行证icon打开。</p>
+<p>移动端直接点击主界面顶部赛季icon/点击主界面左上角星盘icon → 点击赛季icon，在赛季活动界面点击通行证icon打开。</p>
+<p>每次进入通行证，默认显示日常任务界面。</p>
+<h4>1.2.2.关闭通行证</h4>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig12.png" alt="图 12"><figcaption>图 12</figcaption></figure>
+<p>PC端玩家点击右上角，或按快捷键ESC即可关闭通行证界面，返回到上一级赛季活动界面。</p>
+<p>UE交互：通行证界面画面变浅，两侧从中间分开，分别向屏幕两侧淡出，交互动画约0.5s。</p>
+<p>界面关闭时，自动保存当前通行证进度（等级数据、已领取奖励状态）。</p>
+<h3>1.2.通行证等级构成</h3>
+<p>通行证等级为赛季独立机制，新赛季开启后上一赛季等级、经验数据全部清空重置，玩家从<strong>1</strong>级重新开始积累。</p>
+<p>通行证等级上限</p>
+<p>单赛季通行证固定等级上限为100（仅举例）。</p>
+<p>典藏赛季等可根据运营需求调整等级上限，例如120。</p>
+<p>等级升级</p>
+<p>通行证等级通过累计通行证经验【热力勋印】提升。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig13.png" alt="图 13"><figcaption>图 13</figcaption></figure>
+<p>达到对应等级所需经验值后，自动升级并解锁对应等级奖励。</p>
+<p>超出当前等级所需经验自动计入下一等级，无经验损耗，每升入下一等级固定需1000（仅举例）经验值。</p>
+<p>每日可通过任务获取【热力勋印】值累计上限为2000（每周为14000）。（仅举例，具体数值见配置表）</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig14.png" alt="图 14"><figcaption>图 14</figcaption></figure>
+<p>每周可获取的经验值上限为20000（仅举例），与通过任务获取的最大经验差值为6000（仅举例）。通行证经验【热力勋印】还通过周常等产出。</p>
+<p>双轨并行机制</p>
+<p>免费基础通行证【基础礼券】与付费进阶通行证【契约礼券】<strong>共用同一等级体系</strong>。玩家等级进度、经验获取完全同步，仅解锁的奖励池不同。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig15.png" alt="图 15"><figcaption>图 15</figcaption></figure>
+<p>玩家解锁任意礼券，一次升级会同时解锁【基础礼券】与【契约礼券】的对应等级奖励。</p>
+<h3>1.3.通行证状态记录</h3>
+<p>当玩家以下操作时，系统需更新并记录当前通行证状态。</p>
+<p>购买礼券；</p>
+<p>领取任务奖励；</p>
+<p>等级提升、领取等级奖励；</p>
+<p>打开、关闭背包；</p>
+<p>查看道具、资源等信息。</p>
+<h3>交互</h3>
+<h3>2.1.等级提升交互逻辑</h3>
+<p>信息框位置</p>
+<p>如下图所示，等级提升面板弹出位于界面正中。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig16.jpg" alt="图 16"><figcaption>图 16</figcaption></figure>
+<p>操作确认交互逻辑</p>
+<p>确认框交互逻辑如下：</p>
+<p>点击【确认】按钮 → 执行操作流程；</p>
+<p>点击【取消】按钮 → 取消该操作，并返回记录的通行证界面（【等级奖励界面】）。</p>
+<p>等级提升面板</p>
+<p>操作面板交互逻辑如下：</p>
+<p>输入限制规则</p>
+<p>输入值必须为正整数，上限为8位数；</p>
+<p>最小值为1；最大值不超过所操作道具当前堆叠数量；</p>
+<p>当输入值大于最大值时，自动修正为最大值；</p>
+<p>当输入为空或非法字符时，确认按钮置灰，不允许执行操作，并飘字“<strong>仅可输入数字</strong>”。</p>
+<p>执行</p>
+<p>点击【确认】按钮 → 执行操作流程；</p>
+<p>点击【取消】按钮 → 取消该操作，并返回记录的通行证界面（【等级奖励界面】）。</p>
+<h3>2.2.解锁礼券交互逻辑</h3>
+<p>信息框位置</p>
+<p>如下图所示，等级提升面板弹出位于界面正中。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig17.png" alt="图 17"><figcaption>图 17</figcaption></figure>
+<p>操作确认交互逻辑</p>
+<p>确认框交互逻辑如下：</p>
+<p>点击【确认】按钮 → 执行操作流程，跳转到网页支付；</p>
+<p>点击【取消】按钮 → 取消该操作，并返回记录的通行证界面（【解锁礼券界面】）。</p>
+<h3>2.3.活动说明交互逻辑</h3>
+<p>信息框位置</p>
+<p>如图所示，信息提示面板弹出位于界面正中。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig18.jpg" alt="图 18"><figcaption>图 18</figcaption></figure>
+<p>信息框内容</p>
+<p>【活动说明】的文案待具体内容填充确定后可配置。</p>
+<h3>具体功能需求</h3>
+<h3>3.1.页边功能</h3>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig19.jpg" alt="图 19"><figcaption>图 19</figcaption></figure>
+<p>功能区位于界面的顶部和底部，向屏幕四角分别对齐。</p>
+<p>功能区会在【日常任务】、【等级奖励】两个页面中复用。</p>
+<h4>3.1.1.顶部功能区</h4>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig20.png" alt="图 20"><figcaption>图 20</figcaption></figure>
+<p>返回按钮</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig21.png" alt="图 21"><figcaption>图 21</figcaption></figure>
+<p>点击时返回按钮时回到来源界面。</p>
+<p>活动说明按钮</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig22.png" alt="图 22"><figcaption>图 22</figcaption></figure>
+<p>玩家点击【活动说明】按钮，展开标题为【活动说明】的信息弹窗；</p>
+<p>弹窗之外的范围，蒙版阴影模糊。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig23.png" alt="图 23"><figcaption>图 23</figcaption></figure>
+<p>按ESC/点击关闭键/点击弹窗之外的范围，可以关闭弹窗界面。</p>
+<p>可通过按住信息弹窗内任意处/触屏上下滑动手势，对当前列表内容进行垂直滚动浏览，无垂直滚动条图标。</p>
+<p>剩余时间</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig24.png" alt="图 24"><figcaption>图 24</figcaption></figure>
+<p>左侧使用一个沙漏倒计时icon，右侧文字显示当前赛季通行证剩余时间。</p>
+<p>倒计时根据玩法时段自动计算，规则如下：</p>
+<p>若剩余天数≥1，显示“本期剩余xx天”（向下取整天）</p>
+<p>若不满1天时，显示“本期剩余xx时xx分”（向下取整数分钟）</p>
+<p>若不满1小时时，显示“本期剩余xx分xx秒”（向下取整数秒钟）</p>
+<p>若不满1分钟时，显示“本期剩余xx秒”（向下取整数秒钟）</p>
+<p>倒计时归零/赛季结束，玩家若处于通行证界面，则自动退出至主界面。</p>
+<p>拾光通行证icon</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig25.png" alt="图 25"><figcaption>图 25</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig26.png" alt="图 26"><figcaption>图 26</figcaption></figure>
+<p>左侧使用通行证icon，右侧上层为【拾光通行证】文字，右侧下层根据玩家所处界面更换，为【日常任务】/【等级奖励】/【解锁礼券】</p>
+<h4>3.1.2.左侧功能区</h4>
+<p>包含【日常任务】、【等级奖励】两个页签；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig27.png" alt="图 27"><figcaption>图 27</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig28.png" alt="图 28"><figcaption>图 28</figcaption></figure>
+<p>同时有且只有一个页签是选中状态，另一个为非选中状态。选中状态的页签有高亮效果、泡泡跃动动画。</p>
+<p>点击非选中状态页签时，跳转至对应界面，并切换界面页签的选中状态。加入一个极短的页签切换时间，约0.5秒，保证连续点击时显示正常。</p>
+<p>界面页签若有可领取资源，页签icon上做红点效果。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig29.png" alt="图 29"><figcaption>图 29</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig30.png" alt="图 30"><figcaption>图 30</figcaption></figure>
+<p>日常任务界面按钮</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig31.png" alt="图 31"><figcaption>图 31</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig32.png" alt="图 32"><figcaption>图 32</figcaption></figure>
+<p>选中：；未选中：</p>
+<p>等级奖励界面按钮</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig33.png" alt="图 33"><figcaption>图 33</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig34.png" alt="图 34"><figcaption>图 34</figcaption></figure>
+<p>选中：；未选中：</p>
+<h4>3.1.3.底部功能区</h4>
+<p>注意右下角的UID和信号不要被遮挡，固定显示在UI顶部。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig35.png" alt="图 35"><figcaption>图 35</figcaption></figure>
+<p>查看主题宠物按钮</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig36.png" alt="图 36"><figcaption>图 36</figcaption></figure>
+<p>玩家点击查看主题宠物按钮 → 跳转至主题宠物信息界面。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig37.png" alt="图 37"><figcaption>图 37</figcaption></figure>
+<p>按ESC/点击关闭键，可以关闭主题宠物信息界面，返回到来源界面。</p>
+<p>更换主题按钮</p>
+<p>玩家未购买当前赛季礼券，查看主题宠物按钮右侧会有更换主题按钮；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig38.png" alt="图 38"><figcaption>图 38</figcaption></figure>
+<p>玩家购买当前赛季任意礼券，本赛季的更换主题按钮消失；</p>
+<p>点击更换主题按钮 → 跳转至主题选择界面。（见1.2.1）</p>
+<p>全部领取按钮</p>
+<p>【日常任务】、【等级奖励】两个页面的资源出现可领取的图标时，底部功能区右下角触发【全部领取】按钮；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig39.png" alt="图 39"><figcaption>图 39</figcaption></figure>
+<p>点击【全部领取】按钮 → 跳出获得奖励面板；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig40.png" alt="图 40"><figcaption>图 40</figcaption></figure>
+<p>按ESC/点击弹窗之外的范围，可以关闭奖励面板。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig41.png" alt="图 41"><figcaption>图 41</figcaption></figure>
+<p>礼券选购按钮</p>
+<p>玩家点击礼券选购按钮 → 跳转至解锁礼券界面。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig42.png" alt="图 42"><figcaption>图 42</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig43.png" alt="图 43"><figcaption>图 43</figcaption></figure>
+<p>按ESC/点击关闭键，可以关闭解锁礼券界面，返回到来源界面。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig44.jpg" alt="图 44"><figcaption>图 44</figcaption></figure>
+<h3>3.2.日常任务界面功能</h3>
+<p>此界面应用全部页边功能，见3.1.</p>
+<p>此外，该界面还包括【等级区】、【任务区】、【主题宠物区】三个区域。</p>
+<p>日常任务界面如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig45.jpg" alt="图 45"><figcaption>图 45</figcaption></figure>
+<h4>3.2.1.等级区</h4>
+<p>【等级区】包括：</p>
+<p>等级信息；</p>
+<p>等级经验；</p>
+<p>本周热力勋印上限；</p>
+<p>提升等级；</p>
+<p>如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig46.png" alt="图 46"><figcaption>图 46</figcaption></figure>
+<p>等级信息</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig47.png" alt="图 47"><figcaption>图 47</figcaption></figure>
+<p>数字形式的固定信息，对应玩家当前通行证等级数值；</p>
+<p>玩家提升通行证等级时，等级数值对应出现变动；</p>
+<p>等级范围为 0~【最大等级】；</p>
+<p>最大等级固定为100（仅举例）。</p>
+<p>等级经验</p>
+<p>代表当前等级提升到下一等级所需的经验值，固定为1000（仅举例）。</p>
+<p>等级经验以数值和经验条上下两部分构成；</p>
+<p>数值</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig48.png" alt="图 48"><figcaption>图 48</figcaption></figure>
+<p>显示具体信息，即xxxx/1000；</p>
+<p>xxxx数值范围为0~1000；</p>
+<p>xxx数值达到1000时自动提升至下一等级（显示模式为非累积，即刚好升级后显示为0/1000）；</p>
+<p>经验条</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig49.png" alt="图 49"><figcaption>图 49</figcaption></figure>
+<p>素材需要底部暗色条和顶部亮色条；</p>
+<p>反映角色当前经验值与升级所需经验值的比例；</p>
+<p>经验值提升时顶部亮色条做向右前进的动态效果。</p>
+<p>本周热力勋印上限</p>
+<p>【热力勋印】：作为提升通行证等级的资源，俗称通行证等级经验值。玩家通过完成通行证任务和参与活动获得。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig50.png" alt="图 50"><figcaption>图 50</figcaption></figure>
+<p>热力勋印icon为火苗样式；</p>
+<p>热力勋印icon后显示【本周热力勋印上限：xxxxx/20000】</p>
+<p>xxxxx数值范围为0~20000；</p>
+<p>每周日凌晨四点刷新本周获得的热力勋印数值，恢复为0/20000；</p>
+<p>提升等级按钮</p>
+<p>玩家点击提升等级按钮 → 跳转至提升等级窗口；</p>
+<p>窗口信息如下图所示：</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig51.jpg" alt="图 51"><figcaption>图 51</figcaption></figure>
+<p>提升等级窗口之外的范围，蒙版阴影压暗。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig52.png" alt="图 52"><figcaption>图 52</figcaption></figure>
+<p>按ESC/点击关闭键/点击弹窗之外的范围，可以关闭提升等级窗口。</p>
+<p>可点击【可立即获得对应等级物品】，跳出物品信息小窗口，物品信息小窗口之外的范围，蒙版阴影压暗，如图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig53.jpg" alt="图 53"><figcaption>图 53</figcaption></figure>
+<h4>3.2.2.任务区</h4>
+<p>【任务区】包括四个固定每日任务，任务栏横向排布，一个任务为一列。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig54.png" alt="图 54"><figcaption>图 54</figcaption></figure>
+<p>红点规则：</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig55.png" alt="图 55"><figcaption>图 55</figcaption></figure>
+<p>对于待领取的任务，其所在页签的任务名称右上显示红点。</p>
+<p>对于未确认的新任务，其所在页签显示“<strong>New</strong>”。</p>
+<p>红点只会显示在对应页签的任务名称右上方。</p>
+<p>任务排列规则：</p>
+<p>任务奖励未被领取 → 从左到右的固定任务顺序是【你好，魔法师】【努力与汗水】、【契约延续】、【愿望之星】；</p>
+<p>任务奖励被领取 → 按照【<strong>前往&gt;进行中&gt;达成</strong>】的顺序进行排列。</p>
+<p>多个达成任务且任务奖励被逐个领取 → 按照任务奖励被领取的先后顺序进行排列。</p>
+<p>多个达成任务且任务奖励被统一领取 → 按照固定任务顺序进行排列。</p>
+<p>任务状态：</p>
+<p>领取奖励按钮</p>
+<p>素材底板为黄色，为可交互状态。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig56.png" alt="图 56"><figcaption>图 56</figcaption></figure>
+<p>点击领取奖励按钮 → 弹出获得奖励窗口，如图所示。</p>
+<p>奖励窗口之外的范围，蒙版阴影压暗</p>
+<p>按ESC/点击弹窗之外的范围，可以关闭获得奖励窗口。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig57.png" alt="图 57"><figcaption>图 57</figcaption></figure>
+<p>执行</p>
+<p>若领取奖励获取的【热力勋印】值突破当前等级提升到下一等级所需的经验值，则执行：</p>
+<p>弹出获得奖励窗口0.2s后 → 立刻弹出拾光通行证等级晋升窗口，如图所示。</p>
+<p>通行证等级提升窗口之外的范围，蒙版阴影压暗。</p>
+<p>按ESC/点击弹窗之外的范围，可以关闭获得通行证等级晋升窗口，回到获得奖励窗口。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig58.png" alt="图 58"><figcaption>图 58</figcaption></figure>
+<h4>3.2.3.主题宠物区</h4>
+<p>玩家选择当前的赛季主题后，被选择的赛季主题专属宠物形象会固定显示在界面左侧。</p>
+<p>宠物形象显示适用于【日常任务界面】、【等级奖励界面】、【解锁礼券界面】。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig59.png" alt="图 59"><figcaption>图 59</figcaption></figure>
+<p>宠物形象表现为动态立绘，简单Live2d；</p>
+<p>切换界面时，宠物形象动态立绘从0帧重新播放。</p>
+<p>宠物形象动态立绘不可交互。</p>
+<h3>3.3.等级奖励界面功能</h3>
+<p>此界面应用全部页边功能，见3.1.</p>
+<p>此外，该界面还包括【等级区】、【礼券奖励区】、【主题宠物区】三个区域，界面如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig60.jpg" alt="图 60"><figcaption>图 60</figcaption></figure>
+<p>每次跳转到等级奖励界面时，礼券奖励区的六列奖励资源栏有从左到右淡入效果，效果持续0.5s（可根据调整）；</p>
+<p>切换界面时，有切换音效。</p>
+<h4>3.3.1.礼券奖励区</h4>
+<p>礼券奖励区包括【基础礼券】奖励资源栏和【契约礼券】奖励资源栏，以及右侧的下一阶段奖励展示。</p>
+<p>如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig61.png" alt="图 61"><figcaption>图 61</figcaption></figure>
+<p>【基础礼券】奖励资源栏</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig62.png" alt="图 62"><figcaption>图 62</figcaption></figure>
+<p>【契约礼券】奖励资源栏</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig63.png" alt="图 63"><figcaption>图 63</figcaption></figure>
+<p>礼券类型表头</p>
+<p>参考下图。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig64.png" alt="图 64"><figcaption>图 64</figcaption></figure>
+<p>上部：【基础礼券】素材图，标明【基础礼券】文本。</p>
+<p>下部：【契约礼券】素材图，标明【契约礼券】文本。</p>
+<p>点击【契约礼券】区域时 → 跳转【解锁礼券】界面。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig65.png" alt="图 65"><figcaption>图 65</figcaption></figure>
+<p>当没有开通付费【契约礼券】时，【契约礼券】文本的右上角添加锁定图标；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig66.png" alt="图 66"><figcaption>图 66</figcaption></figure>
+<p>玩家没有开通【契约礼券】，领取奖励时，【契约礼券】奖励资源栏里的奖励无法被领取，奖励素材图右上角有锁定图标；</p>
+<p>玩家开通【契约礼券】，领取奖励时，【契约礼券】奖励资源栏里的奖励可以被领取。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig67.png" alt="图 67"><figcaption>图 67</figcaption></figure>
+<p>奖励滚动轴</p>
+<p>结构</p>
+<p>按照通行证等级从低到高的顺序，从左到右依次横向排列，每一列与礼券类型表头基本等宽（略窄于表头），如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig68.png" alt="图 68"><figcaption>图 68</figcaption></figure>
+<p>上部分：</p>
+<p>最上：展示对应等级。</p>
+<p>中部偏上：展示【基础礼券】这一免费方案的奖励。</p>
+<p>下部分：</p>
+<p>中部偏下：展示【契约礼券】这一付费方案的奖励。</p>
+<p>最下：展示【契约礼券】这一付费方案的固定奖励【许愿星】资源*2，61~100级无【许愿星】资源，最下栏为空（【许愿星】可用于兑换稀有道具和时装）。</p>
+<p>内容展示</p>
+<p>奖励物品展示时使用对应icon；</p>
+<p>物品icon下方展示数量，左上角展示品质，右上角展示领取状态。</p>
+<p>已领取状态，物品icon右上角打钩，且物品icon变为静态灰度icon，如图所示；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig69.png" alt="图 69"><figcaption>图 69</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig70.png" alt="图 70"><figcaption>图 70</figcaption></figure>
+<p>可领取状态，右上角有红点标志；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig71.png" alt="图 71"><figcaption>图 71</figcaption></figure>
+<p>尚未解锁时，物品icon右上角有锁定图标。</p>
+<p>可配置内容：</p>
+<p>每一级的付费/免费奖励物品id、数量。</p>
+<p>状态变化：</p>
+<p>所有奖励的变化以单元格结算；</p>
+<p>通行证等级≥奖励等级 → 对应免费奖励变为待领取；</p>
+<p>通行证等级≥奖励等级且开通了任意付费计划 → 对应付费奖励变为待领取，待领取奖励被领取后，变为已领取状态。</p>
+<p>交互逻辑：</p>
+<p>拖动</p>
+<p>奖励区做横向滚轴效果，可水平左右拖动；</p>
+<p>每翻过一列，都会播放效果音，连续触发效果音时为连续音。</p>
+<p>滚轴向某个方向到尽头，用力拉动时有黑框拖出效果，停止拉动有物品框回弹效果。</p>
+<p>点击</p>
+<p>点击待领取物品/【全部领取】按钮时，领取整个单元格内的物品，弹出【恭喜获得】窗口，（奖励一起领取的）获取提示与弹出音效。</p>
+<p>点击不可领取的物品（已领取/未解锁），弹出该物品的详细信息窗口与弹出音效。</p>
+<p>领取的物品类型＜6时，不可左右滑动，弹窗长度固定，弹窗显示如图所示；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig72.png" alt="图 72"><figcaption>图 72</figcaption></figure>
+<p>领取的物品类型＞6时，可左右拉动查看被隐藏的物品，弹窗长度变化与物品显示如图所示；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig73.jpg" alt="图 73"><figcaption>图 73</figcaption></figure>
+<p>左右拉动时，弹窗下方出现类似滚轮的阴影样式；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig74.jpg" alt="图 74"><figcaption>图 74</figcaption></figure>
+<p>下一阶段奖励</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig75.png" alt="图 75"><figcaption>图 75</figcaption></figure>
+<p>此区域固定在界面右侧；</p>
+<p>复用单元格展示奖励的逻辑；</p>
+<p>展示等级为滚动轴中未展示的下一个5的整倍数；</p>
+<p>当卷轴拖到尽头时，没有下一个5的整倍数，则展示满级奖励。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig76.jpg" alt="图 76"><figcaption>图 76</figcaption></figure>
+<h3>3.4.等级奖励界面功能</h3>
+<p>从【日常任务界面】/【等级奖励界面】点击【礼券选购】按钮 → 跳转【等级奖励界面】。</p>
+<p>此界面应用【页边功能】中的【返回按钮】、【活动说明按钮】、【拾光通行证icon】、【查看主题宠物按钮】，见3.1.</p>
+<p>此外，该界面还包括【契约礼券】、【闪耀契约礼券】两个礼券购买区域，界面如下图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig77.jpg" alt="图 77"><figcaption>图 77</figcaption></figure>
+<h4>3.4.1.契约礼券区</h4>
+<p>【契约礼券】区域信息如图所示，包括左侧【单人契约礼券】和右侧【双人契约礼券】。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig78.png" alt="图 78"><figcaption>图 78</figcaption></figure>
+<h4>3.4.2.闪耀契约礼券区</h4>
+<p>【闪耀契约礼券】区域信息如图所示，包括左侧【单人闪耀契约礼券】和右侧【双人闪耀契约礼券】。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig79.png" alt="图 79"><figcaption>图 79</figcaption></figure>
+<h4>3.4.3.价格按钮</h4>
+<p>每个礼券下方有两个价格按钮</p>
+<p>按钮上方的价格可配置浮点数；价格前有货币符号<strong>￥</strong>。</p>
+<p>所有礼券未解锁前，【单人闪耀契约礼券】价格按钮右上方有【异色】图标，两种双人礼券价格按钮右上方有【双人】图标；</p>
+<p>任意礼券被解锁后，被解锁的购买按钮显示“已购买”，置灰，不可互动，如图所示。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig80.png" alt="图 80"><figcaption>图 80</figcaption></figure>
+<p>任意单人礼券被解锁后，对应的双人礼券价格按钮右上方显示【赠礼】图标；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig81.png" alt="图 81"><figcaption>图 81</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig82.png" alt="图 82"><figcaption>图 82</figcaption></figure>
+<p>左侧按钮对应单人版本，右侧按钮对应双人版本。</p>
+<p>本界面有三种支付状态</p>
+<p>【未解锁】、【契约礼券】（单人/双人）、【闪耀契约礼券】（单人/双人）；每个版本结束时，状态被重置为【未解锁】；</p>
+<p>状态流转规则</p>
+<p>【未解锁】状态可以付费解锁【契约礼券】或【闪耀契约礼券】；</p>
+<p>【契约礼券】可以付费升级为【闪耀契约礼券】；</p>
+<p>【闪耀契约礼券】不可再升级。</p>
+<p>如果玩家处于【未解锁】状态</p>
+<p>全部支付按钮都可交互；</p>
+<p>上部分【契约礼券】与下部分【闪耀契约礼券】都显示对应版本价格，如图所示；</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig83.png" alt="图 83"><figcaption>图 83</figcaption></figure>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig84.png" alt="图 84"><figcaption>图 84</figcaption></figure>
+<p>点击任意购买按钮后跳转对应付款界面。</p>
+<p>付款验证成功，则提示“付款成功”，切换至对应状态。</p>
+<p>付款验证失败，则界面和状态都不变化。</p>
+<p>如果玩家处于【契约礼券】（单人/双人）状态</p>
+<p>仅购买【单人契约礼券】</p>
+<p>需支付单人契约礼券本身的价格；</p>
+<p>购买后，左侧购买按钮显示“已购买”，置灰，不可互动；</p>
+<p>购买后，右侧购买按钮可交互（注意此时显示的支付价格是升级双人的价格）</p>
+<p>直接购买【双人契约礼券】</p>
+<p>需支付单人契约礼券本身的价格+升级双人的价格；</p>
+<p>左侧和右侧购买按钮都显示“已购买”，置灰，不可互动；</p>
+<p>如果玩家处于【闪耀契约礼券】（单人/双人）状态</p>
+<p>状态显示逻辑同【契约礼券】。</p>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig85.png" alt="图 85"><figcaption>图 85</figcaption></figure>
+<h2>资源汇总</h2>
+<h3>美术资源汇总</h3>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig86.png" alt="图 86"><figcaption>图 86</figcaption></figure>
+<h3>任务配置表</h3>
+<figure class="figure"><img src="assets/img/luoke-world-design/fig87.png" alt="图 87"><figcaption>图 87</figcaption></figure>
+    </article>
+
+    <div class="doc-foot">
+      <a class="page__back" href="../index.html#work">&#8592; 返回作品列表</a>
+      <a class="page__back" href="../index.html#contact">联系我 &#8594;</a>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">黄彦飞 · 游戏系统策划作品集 &nbsp;|&nbsp; 上海</footer>
+<script src="../assets/main.js"></script>
+</body>
+</html>
