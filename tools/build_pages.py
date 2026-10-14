@@ -26,19 +26,6 @@ from docx.oxml.ns import qn  # noqa: E402
 
 WORKS = [
     dict(
-        slug='e7-monetization-design',
-        title='《第七史诗》商业化系统策划案 · 回声铭牌 EM',
-        cat='design',
-        cat_label='系统策划案',
-        role='系统策划 · 商业化方向',
-        tag='tag--design',
-        year='2026.10',
-        metric_a=('V0.2', '文档版本'),
-        metric_b=('5%', '额外产出上限'),
-        source=os.path.join(SRC, '第七史诗_商业化系统策划案.md'),
-        kind='md',
-    ),
-    dict(
         slug='hsr-warp-design',
         title='《崩坏：星穹铁道》跃迁系统策划案',
         cat='design',
@@ -64,32 +51,6 @@ WORKS = [
         source=os.path.join(DESKTOP, '策划案', '《洛克王国：世界》.docx'),
         kind='docx',
         skip_head=3,
-    ),
-    dict(
-        slug='e7-economy-analysis',
-        title='《第七史诗》经济系统拆解案',
-        cat='analysis',
-        cat_label='系统拆解案',
-        role='拆解分析 · 资源流动',
-        tag='tag--analysis',
-        year='2026.10',
-        metric_a=('31', '表格数'),
-        metric_b=('4', '核心结论'),
-        source=os.path.join(SRC, '第七史诗_经济系统拆解案.md'),
-        kind='md',
-    ),
-    dict(
-        slug='e7-monetization-analysis',
-        title='《第七史诗》商业化系统拆解案',
-        cat='analysis',
-        cat_label='系统拆解案',
-        role='拆解分析 · 付费全链路',
-        tag='tag--analysis',
-        year='2026.10',
-        metric_a=('Φ', '基准单位'),
-        metric_b=('7', '付费板块'),
-        source=os.path.join(SRC, '第七史诗_商业化系统拆解案.md'),
-        kind='md',
     ),
     dict(
         slug='e7-payment-analysis',
@@ -220,11 +181,8 @@ TPL = u'''<!DOCTYPE html>
 '''
 
 DESCS = {
-    'e7-monetization-design': u'针对《第七史诗》长尾付费塌陷，提出「回声铭牌 EM」记账型反馈模块：以重复获取角色的残余价值为锚点重新计价，用资源类与典藏类双目录把回收出口与版本通胀预算隔开，并对肝帝、氪佬、又氪又肝三类人群分别做发行预算校验。含完整配置表结构与核心逻辑伪代码。',
     'hsr-warp-design': u'完整设计一套抽卡（跃迁）系统：卡池结构与 UI 分区、概率与保底递增量表、跨池继承规则、UP 切换与追歼值落的边界处理，配套 13 张界面原型图与状态流转说明。',
     'luoke-world-design': u'围绕《洛克王国：世界》「拾光通行证」做复刻式系统设计：双入口跳转逻辑与首次/非首次进入的分支状态、等级构成与经验投放、任务链与赛季活动的对应关系、免费线与小/大礼券双付费线的奖励点布局，配套界面布局图与配表说明。',
-    'e7-economy-analysis': u'从 faucet / sink 视角还原《第七史诗》的资源流动结构，解释这套运营多年的产品为什么能把体力的产出增长率压到接近零，以及金币作为共享稀缺资源如何在低氪玩家的每日决策里制造取舍。',
-    'e7-monetization-analysis': u'把《第七史诗》的付费点全部折算到一个基准单位 Φ（一次 UP 硬保底）上做横向比价，建立边际价值衰减与抽数时点敏感性两个模型，回答长尾付费为什么断掉、转化为什么集中出现在最后 40 抽。',
     'e7-payment-analysis': u'按结算货币把《第七史诗》商城拆成四轨商店，覆盖限时礼包、常驻直购、凭证兑换与订阅四类付费模块，含月免费投放总量、各付费深度资源比较与 121 抽保底下的限定角色获取周期演算。',
     'hsr-payment-analysis': u'以版本资源投放与五类用户的资源比较为主线拆解星铁付费体系：兑换比例与保底结构、月卡与通行证价值、各层用户获取限定角色的时长，延伸到限定角色定价与二手账号行情，给出可落地的商业化判断。',
     'wz-gift-analysis': u'梳理《王者荣耀》商城的礼包层级与定价逻辑，拆解首充、周卡、直购、限时四类礼包的投放节奏与锚定方式，并给出可迁移到其它 MOBA 手游的礼包设计清单。',
